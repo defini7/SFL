@@ -23,3 +23,11 @@
 #ifdef SFL_CSVREADER
 #include "Lib/CsvReader.h"
 #endif
+
+#ifdef SFL_VEC
+#include "Lib/Vec.h"
+#endif
+
+#ifdef SFL_BMP
+#include "Lib/Bmp.h"
+#endif
