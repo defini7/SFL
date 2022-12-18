@@ -1,6 +1,5 @@
-#include <iostream>
-
-#include "Tester.h"
+#define SFL_TESTER
+#include "SFL.h"
 
 bool test1()
 {
