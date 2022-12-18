@@ -1,5 +1,7 @@
 #include <iostream>
-#include <net/net.h>
+
+#define SFL_NET
+#include "SFL.h"
 
 enum class MessageType : uint32_t
 {
@@ -10,26 +12,26 @@ enum class MessageType : uint32_t
 	ServerMessage
 };
 
-class CustomServer : public def::net::server<MessageType>
+class CustomServer : public sfl::net::server<MessageType>
 {
 public:
-	CustomServer(uint16_t port) : def::net::server<MessageType>(port)
+	CustomServer(uint16_t port) : sfl::net::server<MessageType>(port)
 	{
 
 	}
 
 protected:
-	bool OnClientConnect(std::shared_ptr<def::net::connection<MessageType>> client) override
+	bool OnClientConnect(std::shared_ptr<sfl::net::connection<MessageType>> client) override
 	{
 		return true;
 	}
 
-	void OnClientDisconnect(std::shared_ptr<def::net::connection<MessageType>> client) override
+	void OnClientDisconnect(std::shared_ptr<sfl::net::connection<MessageType>> client) override
 	{
 
 	}
 
-	void OnMessage(std::shared_ptr<def::net::connection<MessageType>> client, def::net::message<MessageType>& msg) override
+	void OnMessage(std::shared_ptr<sfl::net::connection<MessageType>> client, sfl::net::message<MessageType>& msg) override
 	{
 		switch (msg.header.id)
 		{
