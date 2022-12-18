@@ -39,12 +39,13 @@
 
 namespace sfl
 {
-	class CSV_Reader
+	class CsvReader
 	{
 	public:
-		CSV_Reader(std::string sFileName)
+		CsvReader() = default;
+		CsvReader(std::string sFileName)
 		{
-			m_sFileName = sFileName;
+			SetFileName(sFileName);
 			Load();
 		}
 
@@ -85,6 +86,12 @@ namespace sfl
 				}
 			}
 
+		}
+
+	public:
+		void SetFileName(std::string sFileName)
+		{
+			m_sFileName = sFileName;
 		}
 
 		bool Load()
@@ -129,8 +136,6 @@ namespace sfl
 
 			return true;
 		}
-
-	public:
 
 		std::string GetValue(int row, int col)
 		{
