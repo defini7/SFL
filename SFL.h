@@ -20,6 +20,6 @@
 #include "Lib/Net/Net.h"
 #endif
 
-#ifdef SFL_CSV_READER
+#ifdef SFL_CSVREADER
 #include "Lib/CsvReader.h"
 #endif
