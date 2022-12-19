@@ -58,9 +58,13 @@ namespace sfl
 	const std::string BG_WHITE = "\033[47m";
 	const std::string BG_RESET = "\033[49m";
 	
-	const std::string BOLD = "\033[1m";
-	const std::string UNDERLINE = "\033[4m";
 	const std::string RESET_ALL = "\033[0m";
+	const std::string BOLD = "\033[1m";
+	const std::string CURSIVE = "\033[3m";
+	const std::string UNDERLINE = "\033[4m";
+	const std::string STRIKE = "\033[9m";
+	const std::string DOUBLE_UNDERLINE = "\033[21m";
+	const std::string TOP_LINE = "\033[53m";
 
 	void Print(const std::string& sText, std::ostream& os = std::cout)
 	{
