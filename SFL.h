@@ -63,3 +63,7 @@
 #ifdef SFL_CONSOLE
 #include "Lib/Console.h"
 #endif
+
+#ifdef SFL_FIXEDPOINT
+#include "Lib/FixedPoint.h"
+#endif
