@@ -50,19 +50,19 @@ namespace sfl
 		~DataFile() = default;
 
 	public:
-		void SetString(const std::string& value)
+		void SetString(const std::string& v)
 		{
-			sContent = value;
+			sValue = v;
 		}
 
 		const std::string String() const
 		{
-			return sContent;
+			return sValue;
 		}
 
-		void SetInt(const long long n)
+		void SetInt(long long nValue)
 		{
-			SetString(std::to_string(n));
+			SetString(std::to_string(nValue));
 		}
 
 		long long Int() const
@@ -70,9 +70,9 @@ namespace sfl
 			return std::stoll(String());
 		}
 
-		void SetDecimal(const long double n)
+		void SetDecimal(long double dValue)
 		{
-			SetString(std::to_string(n));
+			SetString(std::to_string(dValue));
 		}
 
 		long double Decimal() const
@@ -80,22 +80,14 @@ namespace sfl
 			return std::stold(String());
 		}
 
-		void SetBool(const bool n)
+		void SetBool(const bool bValue)
 		{
-			SetString(std::to_string((int)n));
+			SetString(std::to_string((int)bValue));
 		}
 
 		bool Bool() const
 		{
-			std::function<bool(const std::string&)> ToBoolean = [&](const std::string& value)
-			{
-				if (_stricmp(value.c_str(), "true") == 0)
-					return true;
-
-				return false;
-			};
-
-			return ToBoolean(String().c_str());
+			return (bool)std::stoll(String());
 		}
 
 		bool HasProperty(const std::string& name) const
@@ -166,21 +158,24 @@ namespace sfl
 					if (obj.second.vecObjects.empty())
 					{
 						// if it is, we should extract field name and value
-						std::string name = obj.first;
-						std::string value = obj.second.sContent;
+						std::string& sName = obj.first;
+						std::string& sValue = obj.second.sValue;
 
-						// then append field into a file
-						os << name << " = " << value << ";\n";
+						// insert name and value
+						os << sName << " = " << sValue << ";\n";
 					}
 					else
 					{
-						os << obj.first << "\n";
+						std::string& sName = obj.first;
+						DataFile& dfChild = obj.second;
+
+						os << sName << "\n";
 
 						AddTabs();
 						os << "(\n";
 
 						// there are some objects, so parse them too
-						Write(os, obj.second, tabs + 1);
+						Write(os, dfChild, tabs + 1);
 
 						AddTabs();
 						os << ')' << std::endl;
@@ -326,7 +321,7 @@ namespace sfl
 
 	public:
 		// Just container to store values of light-weight type as string
-		std::string sContent;
+		std::string sValue;
 
 		// Store name of the object and object by itself
 		std::vector<std::pair<std::string, DataFile>> vecObjects;
