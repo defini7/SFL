@@ -28,6 +28,12 @@
 ***/
 #pragma endregion
 
+#pragma region includes
+
+#include <intrin.h>
+
+#pragma endregion
+
 namespace def
 {
 	template <size_t dp>
