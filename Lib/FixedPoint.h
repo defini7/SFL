@@ -35,21 +35,60 @@ namespace def
 	{
 		constexpr fixed(double d)
 		{
-			v = int(d * double(1 << dp) + (d >= 0 ? 0.5 : -0.5));
+			// int(d * double(1 << dp) + (d >= 0 ? 0.5 : -0.5));
+
+			__m256d _d, _zero, _m, _mask, _half;
+
+			_half = _mm256_set1_pd(0.5);
+
+			// double(1 << dp)
+			_sh = _mm256_set1_pd(double(1 << dp));
+
+			_d = _mm256_set1_pd(d);
+			_zero = _mm256_set1_pd(0.0);
+
+			// d * double(1 << dp)
+			_m = _mm256_mul_pd(_d, _sh);
+
+			_mask = _mm256_cmp_pd(_d, _zero, _CMP_GE_OQ);
+
+			if (_mm256_movemask_pd(_mask) > 0)
+				_m = _mm256_add_pd(_m, _half);
+			else
+				_m = _mm256_sub_pd(_m, _half);
+
+			_v = _mm256_castpd_si256(_m);
 		}
 
 		constexpr double as_double() const
 		{
-			return (double)v / (double)(1 << dp);
+			__m256d _r, _d_v;
+
+			// (double)v / (double)(1 << dp);
+
+			_d_v = _mm256_castsi256_pd(_v);
+
+			_r = _mm256_div_pd(_d_v, _sh);
+
+	#ifdef _WIN32
+			return _r.m256d_f64[0];
+	#else
+			return _r[0];
+	#endif
 		}
 
 		constexpr int as_fixed() const
 		{
-			return v;
+	#ifdef _WIN32
+			return (int)_v.m256i_i32[0];
+	#else
+			return (int)_v[0];
+	#endif
 		}
 
 	private:
-		int v;
+		__m256i _v;
+		__m256d _sh;
 
 	};
 
