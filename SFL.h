@@ -67,3 +67,7 @@
 #ifdef SFL_FIXEDPOINT
 #include "Lib/FixedPoint.h"
 #endif
+
+#ifdef SFL_MENU
+#include "Lib/Menu.h"
+#endif
