@@ -52,8 +52,8 @@
 #include "Lib/CsvReader.h"
 #endif
 
-#ifdef SFL_VEC
-#include "Lib/Vec.h"
+#ifdef SFL_VEC2D
+#include "Lib/Vec2D.h"
 #endif
 
 #ifdef SFL_BMP
